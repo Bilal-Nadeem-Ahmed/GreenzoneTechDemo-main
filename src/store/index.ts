@@ -37,9 +37,10 @@ export default new Vuex.Store<State>({
 			state.todos.push(todo);
 		},
 	},
+	//corrects reference string
 	actions: {
 		addToDo({ commit }, todo: any) {
-			commit('AddToTodo', todo);
+			commit('AddToDo', todo);
 		},
 	},
 	modules: {},
