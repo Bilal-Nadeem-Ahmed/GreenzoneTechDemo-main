@@ -4,6 +4,9 @@
 			<v-app-bar-title> Todo List </v-app-bar-title>
 		</v-app-bar>
 		<p>{{ $store.state.todos }}</p>
+		<div v-for="todo in $store.state.todos" v-bind:key="todo.id">
+			<to-do-item-card v-bind:todo="todo"></to-do-item-card>
+		</div>
 		<ToDoItemCard></ToDoItemCard>
 	</div>
 </template>
