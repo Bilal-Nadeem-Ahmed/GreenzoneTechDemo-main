@@ -3,11 +3,13 @@
 		<v-app-bar color="deep-purple" dark>
 			<v-app-bar-title> Todo List </v-app-bar-title>
 		</v-app-bar>
-		<p>{{ $store.state.todos }}</p>
-		<div v-for="todo in $store.state.todos" v-bind:key="todo.id">
+		<div v-for="todo in isCompleted" v-bind:key="todo.id">
 			<to-do-item-card v-bind:todo="todo"></to-do-item-card>
 		</div>
-		<ToDoItemCard></ToDoItemCard>
+		<p>incompleted</p>
+		<div v-for="todo in isIncompleted" v-bind:key="todo.id">
+			<to-do-item-card v-bind:todo="todo"></to-do-item-card>
+		</div>
 	</div>
 </template>
 
@@ -36,7 +38,15 @@ export default class HomeView extends Vue {
 			return;
 		}
 	}
-	// adds method to get random todos with image
+	//gets the filtered complete messages
+	get isCompleted() {
+		return this.$store.getters.getCompleteToDos;
+	}
+	//gets the filtered incomplete messages
+	get isIncompleted() {
+		return this.$store.getters.getIncompleteToDos;
+	}
+
 	public async getToDos(): Promise<void> {
 		const Service = new Services();
 		let loaded = false;
@@ -51,6 +61,7 @@ export default class HomeView extends Vue {
 				isCompleted: todo.completed,
 				imageUrl: image.url,
 			};
+			console.log(newToDo);
 			store.dispatch('addToDo', newToDo);
 		}
 		loaded = true;
