@@ -23,13 +23,13 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-// renames for correct import
+// imports components
 import ToDoItemCard from '../components/ToDoItemCard.vue';
 import ToDoInputCard from '../components/ToDoInputCard.vue';
 import store, { Todo } from '@/store';
 import Services from '../Services/index';
-// adds component
 
+// adds components
 @Component({ components: { ToDoItemCard, ToDoInputCard } })
 export default class HomeView extends Vue {
 	public todoToAdd: Todo = {
@@ -55,7 +55,7 @@ export default class HomeView extends Vue {
 	get isIncompleted() {
 		return this.$store.getters.getIncompleteToDos;
 	}
-
+	//gets initial todos and images
 	public async getToDos(): Promise<void> {
 		const Service = new Services();
 		let loaded = false;
@@ -75,6 +75,7 @@ export default class HomeView extends Vue {
 		}
 		loaded = true;
 	}
+	//calls the method to get initial commits on load, would ideally have a loader/spinner aswell
 	public mounted() {
 		this.getToDos();
 	}
