@@ -3,9 +3,29 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store<any>({
+export interface Todo {
+	title: string;
+	description: string;
+	id: number;
+	isCompleted: boolean;
+	imageUrl: string;
+}
+interface State {
+	todos: Todo[];
+}
+
+export default new Vuex.Store<State>({
 	state: {
-		todos: [],
+		todos: [
+			{
+				id: 1,
+				title:
+					'laboriosam mollitia et enim quasi adipisci quia provident illum',
+				description: 'ghjg',
+				isCompleted: false,
+				imageUrl: 'gjhkg',
+			},
+		],
 	},
 	getters: {
 		getToDos(state) {
@@ -13,15 +33,13 @@ export default new Vuex.Store<any>({
 		},
 	},
 	mutations: {
-		AddToDo(state, todo: any) {
-			state.todos = todo;
+		AddToDo(state, todo: Todo) {
+			state.todos.push(todo);
 		},
 	},
 	actions: {
 		addToDo({ commit }, todo: any) {
-			const todos = this.state.todos;
-			todos.push(todo);
-			commit('AddToTodo', todos);
+			commit('AddToTodo', todo);
 		},
 	},
 	modules: {},
