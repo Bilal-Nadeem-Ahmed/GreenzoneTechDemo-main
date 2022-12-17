@@ -4,6 +4,7 @@
 			<v-app-bar-title> Todo List </v-app-bar-title>
 		</v-app-bar>
 		<p>{{ $store.state.todos }}</p>
+		<ToDoItemCard></ToDoItemCard>
 	</div>
 </template>
 
@@ -12,9 +13,10 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 // renames for correct import
 import ToDoItemCard from '../components/ToDoItemCard.vue';
 import store, { Todo } from '@/store';
-import Services from '../Services/index.js';
+import Services from '../Services/index';
+// adds component
 
-@Component({})
+@Component({ components: { ToDoItemCard } })
 export default class HomeView extends Vue {
 	public todoToAdd: Todo = {
 		title: '',
