@@ -46,20 +46,28 @@ export default new Vuex.Store<State>({
 		},
 		// This methods toggles the value of is complete of a todo
 		ToggleIsComplete(state, todo: Todo) {
+			const idToToggle = state.todos.filter((x) => x.id === todo.id);
+			const toDoToRemove = state.todos.indexOf(todo);
+			state.todos.splice(toDoToRemove, 1);
+			idToToggle[0].isCompleted = !idToToggle[0].isCompleted;
+			state.todos.push(idToToggle[0]);
+		},
+		//This method deletes todos
+		DeleteTodo(state, todo: Todo) {
 			const id = state.todos.filter((x) => x.id === todo.id);
 			const toDoToRemove = state.todos.indexOf(todo);
 			state.todos.splice(toDoToRemove, 1);
-			id[0].isCompleted = !id[0].isCompleted;
-			state.todos.push(id[0]);
 		},
 	},
-	//corrects reference string
 	actions: {
 		addToDo({ commit }, todo: Todo) {
 			commit('AddToDo', todo);
 		},
 		toggleIsComplete({ commit }, todo: Todo) {
 			commit('ToggleIsComplete', todo);
+		},
+		deleteTodo({ commit }, todo: Todo) {
+			commit('DeleteTodo', todo);
 		},
 	},
 	modules: {},
