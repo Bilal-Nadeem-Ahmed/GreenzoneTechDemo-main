@@ -31,6 +31,14 @@ export default new Vuex.Store<State>({
 		getToDos(state) {
 			return state.todos;
 		},
+		// returns complete todos
+		getCompleteToDos(state) {
+			return state.todos.filter((todo) => todo.isCompleted === true);
+		},
+		//returns incomplete todos
+		getIncompleteToDos(state) {
+			return state.todos.filter((todo) => todo.isCompleted === false);
+		},
 	},
 	mutations: {
 		AddToDo(state, todo: Todo) {
