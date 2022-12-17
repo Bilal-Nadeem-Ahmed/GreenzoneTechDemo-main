@@ -3,13 +3,20 @@
 		<v-app-bar color="deep-purple" dark>
 			<v-app-bar-title> Todo List </v-app-bar-title>
 		</v-app-bar>
-		<div v-for="todo in isCompleted" v-bind:key="todo.id">
-			<to-do-item-card v-bind:todo="todo"></to-do-item-card>
-		</div>
-		<p>incompleted</p>
-		<div v-for="todo in isIncompleted" v-bind:key="todo.id">
-			<to-do-item-card v-bind:todo="todo"></to-do-item-card>
-		</div>
+		<h1 class="text-center">My To Do List</h1>
+		<br />
+		<h2>Complete ToDos</h2>
+		<v-container class="d-flex justify-space-around flex-wrap">
+			<div v-for="todo in isCompleted" v-bind:key="todo.id">
+				<to-do-item-card v-bind:todo="todo"></to-do-item-card>
+			</div>
+		</v-container>
+		<h2>InComplete ToDos</h2>
+		<v-container class="d-flex justify-space-around flex-wrap">
+			<div v-for="todo in isIncompleted" v-bind:key="todo.id">
+				<to-do-item-card v-bind:todo="todo"></to-do-item-card>
+			</div>
+		</v-container>
 	</div>
 </template>
 
