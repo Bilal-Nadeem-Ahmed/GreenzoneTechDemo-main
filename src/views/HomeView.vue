@@ -4,6 +4,7 @@
 			<v-app-bar-title> Todo List </v-app-bar-title>
 		</v-app-bar>
 		<h1 class="text-center">My To Do List</h1>
+		<ToDoInputCard></ToDoInputCard>
 		<br />
 		<h2>Complete ToDos</h2>
 		<v-container class="d-flex justify-space-around flex-wrap">
@@ -24,11 +25,12 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 // renames for correct import
 import ToDoItemCard from '../components/ToDoItemCard.vue';
+import ToDoInputCard from '../components/ToDoInputCard.vue';
 import store, { Todo } from '@/store';
 import Services from '../Services/index';
 // adds component
 
-@Component({ components: { ToDoItemCard } })
+@Component({ components: { ToDoItemCard, ToDoInputCard } })
 export default class HomeView extends Vue {
 	public todoToAdd: Todo = {
 		title: '',
