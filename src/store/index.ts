@@ -7,12 +7,22 @@ export default new Vuex.Store<any>({
 	state: {
 		todos: [],
 	},
-	getters: {},
+	getters: {
+		getToDos(state) {
+			return state.todos;
+		},
+	},
 	mutations: {
-		addToDo(state, todo: any) {},
+		AddToDo(state, todo: any) {
+			state.todos = todo;
+		},
 	},
 	actions: {
-		addToDo({ commit }, todo: any) {},
+		addToDo({ commit }, todo: any) {
+			const todos = this.state.todos;
+			todos.push(todo);
+			commit('AddToTodo', todos);
+		},
 	},
 	modules: {},
 });
