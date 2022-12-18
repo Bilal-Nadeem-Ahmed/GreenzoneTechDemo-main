@@ -42,7 +42,18 @@ export default class ToDoInputCard extends Vue {
 		(this.$refs.form as Vue & { reset: () => boolean }).reset();
 	}
 	addToDo(): void {
-		return;
+		let todo: Todo = {
+			// would ideally use a uuid here
+			id: new Date().getTime(),
+			title: this.Title,
+			description: this.Description,
+			// this will default to false as its a new todo
+			isCompleted: false,
+			imageUrl: this.ImageUrl,
+		};
+
+		store.dispatch('addToDo', todo);
+		this.reset();
 	}
 	titleRules = [
 		(v: string) => !!v || 'Title is required',
