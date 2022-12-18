@@ -9,13 +9,19 @@
 		<h2>Complete ToDos</h2>
 		<v-container class="d-flex justify-space-around flex-wrap">
 			<div v-for="todo in isCompleted" v-bind:key="todo.id">
-				<to-do-item-card v-bind:todo="todo"></to-do-item-card>
+				<to-do-item-card
+					@editToDo="editToDo"
+					v-bind:todo="todo"
+				></to-do-item-card>
 			</div>
 		</v-container>
 		<h2>InComplete ToDos</h2>
 		<v-container class="d-flex justify-space-around flex-wrap">
 			<div v-for="todo in isIncompleted" v-bind:key="todo.id">
-				<to-do-item-card v-bind:todo="todo"></to-do-item-card>
+				<to-do-item-card
+					@editToDo="editToDo"
+					v-bind:todo="todo"
+				></to-do-item-card>
 			</div>
 		</v-container>
 	</div>
@@ -47,6 +53,7 @@ export default class HomeView extends Vue {
 			return;
 		}
 	}
+
 	//gets the filtered complete messages
 	get isCompleted() {
 		return this.$store.getters.getCompleteToDos;
@@ -54,6 +61,9 @@ export default class HomeView extends Vue {
 	//gets the filtered incomplete messages
 	get isIncompleted() {
 		return this.$store.getters.getIncompleteToDos;
+	}
+	public editToDo(id: string) {
+		console.log(id);
 	}
 	//gets initial todos and images
 	public async getToDos(): Promise<void> {
