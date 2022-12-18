@@ -61,7 +61,6 @@ export default new Vuex.Store<State>({
 			const toDoToDelete = state.todos.filter((x) => x.id === todo.id);
 			const toDoToRemove = state.todos.indexOf(toDoToDelete[0]);
 			state.todos.splice(toDoToRemove, 1, todo);
-			// state.todos.push(todo);
 		},
 	},
 	actions: {
