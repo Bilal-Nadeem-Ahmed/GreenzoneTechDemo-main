@@ -4,7 +4,12 @@
 			<v-app-bar-title> Todo List </v-app-bar-title>
 		</v-app-bar>
 		<h1 class="text-center">My To Do List</h1>
-		<ToDoInputCard></ToDoInputCard>
+		<ToDoEditCard
+			v-if="shouldDisplayEdit"
+			@reset="toggleShouldDisplayEdit"
+			:toDo="toDoToEdit"
+		></ToDoEditCard>
+		<ToDoInputCard v-if="!shouldDisplayEdit"></ToDoInputCard>
 		<br />
 		<h2>Complete ToDos</h2>
 		<v-container class="d-flex justify-space-around flex-wrap">
@@ -32,11 +37,12 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 // imports components
 import ToDoItemCard from '../components/ToDoItemCard.vue';
 import ToDoInputCard from '../components/ToDoInputCard.vue';
+import ToDoEditCard from '../components/ToDoEditCard.vue';
 import store, { Todo } from '@/store';
 import Services from '../Services/index';
 
 // adds components
-@Component({ components: { ToDoItemCard, ToDoInputCard } })
+@Component({ components: { ToDoItemCard, ToDoInputCard, ToDoEditCard } })
 export default class HomeView extends Vue {
 	public todoToAdd: Todo = {
 		title: '',
@@ -53,7 +59,8 @@ export default class HomeView extends Vue {
 			return;
 		}
 	}
-
+	shouldDisplayEdit = false;
+	toDoToEdit: Todo;
 	//gets the filtered complete messages
 	get isCompleted() {
 		return this.$store.getters.getCompleteToDos;
@@ -62,14 +69,21 @@ export default class HomeView extends Vue {
 	get isIncompleted() {
 		return this.$store.getters.getIncompleteToDos;
 	}
+	toggleShouldDisplayEdit(): void {
+		this.shouldDisplayEdit = !this.shouldDisplayEdit;
+	}
+	//event listener assigns the todo to edit which is passed as a prop
 	public editToDo(id: string) {
-		console.log(id);
+		this.toDoToEdit = this.$store.getters.getToDos.filter(
+			(todo) => todo.id === id
+		)[0];
+		this.shouldDisplayEdit = true;
 	}
 	//gets initial todos and images
 	public async getToDos(): Promise<void> {
 		const Service = new Services();
+		// loaded below would be used for a loading animation
 		let loaded = false;
-		console.log(loaded);
 		for (let i = 1; i < 5; i++) {
 			let todo = await Service.getTodo(i);
 			let image = await Service.getImage();
@@ -80,7 +94,6 @@ export default class HomeView extends Vue {
 				isCompleted: todo.completed,
 				imageUrl: image.url,
 			};
-			console.log(newToDo);
 			store.dispatch('addToDo', newToDo);
 		}
 		loaded = true;
