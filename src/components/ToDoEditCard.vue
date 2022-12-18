@@ -14,61 +14,58 @@
 			required
 		></v-text-field>
 		<v-text-field v-model="ImageUrl" label="Image Url"></v-text-field>
-		<v-btn :disabled="valid" color="success" class="mr-4" @click="addToDo">
-			addToDo
+		<v-btn :disabled="valid" color="success" class="mr-4" @click="updateToDo">
+			EditToDo
 		</v-btn>
-		<v-btn color="error" class="mr-4" @click="reset"> Reset </v-btn>
+		<v-btn color="error" class="mr-4" @click="reset"> Cancel </v-btn>
 	</v-form>
 </template>
 
 <script lang="ts">
 import store, { Todo } from '@/store';
-import { Vue, Prop, Component } from 'vue-property-decorator';
+import { Vue, Prop, Component, Emit } from 'vue-property-decorator';
 
 @Component({
 	components: {},
 })
-export default class ToDoInputCard extends Vue {
+export default class ToDoEditCard extends Vue {
 	// variables for the v-model which will be used to create a new todo
+	@Prop() toDo!: Todo;
 
 	Title = '';
 	Description = '';
 	ImageUrl = '';
 	valid = false;
+	@Emit('reset')
 	reset(): void {
 		(this.$refs.form as Vue & { reset: () => boolean }).reset();
 	}
 	isValid(): boolean {
 		return (this.$refs.form as Vue & { validate: () => boolean }).validate();
 	}
-	addToDo(): void {
+	updateToDo(): void {
 		if (!this.isValid()) {
 			return;
 		}
-		// this prevents empty messages being added
 		if (this.Title.length < 1) {
 			return;
 		}
 		let todo: Todo = {
-			// would ideally use a uuid here
-			id: new Date().getTime(),
+			id: this.toDo.id,
 			title: this.Title,
 			description: this.Description,
 			// this will default to false as its a new todo
-			isCompleted: false,
+			isCompleted: this.toDo.isCompleted,
 			imageUrl: this.ImageUrl,
 		};
 
-		store.dispatch('addToDo', todo);
+		store.dispatch('editToDo', todo);
 		this.reset();
 	}
 	todoTitles = this.$store.getters.getToDos.map((x) => x.title);
 	titleRules = [
 		(v: string) => !!v || 'Title is required',
 		(v: string) => v.length >= 10 || 'Title must be more than 10 characters',
-		//this does not work as well as it should, would use an external library for validation
-		(v: string) =>
-			this.todoTitles.includes(v) === true || 'Title must be unique',
 		(v: string) => v.length <= 100 || 'Title must be less than 100 characters',
 	];
 	descriptionRules = [
@@ -77,6 +74,11 @@ export default class ToDoInputCard extends Vue {
 			v.length <= 1000 || 'Title must be less than 1000 characters',
 		(v: string) => v.length >= 10 || 'Title must be more than 10 characters',
 	];
+	public mounted() {
+		this.Title = this.toDo.title;
+		this.Description = this.toDo.description;
+		this.ImageUrl = this.toDo.imageUrl;
+	}
 }
 </script>
 
