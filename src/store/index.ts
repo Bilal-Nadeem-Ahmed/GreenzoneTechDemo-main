@@ -58,6 +58,12 @@ export default new Vuex.Store<State>({
 			const toDoToRemove = state.todos.indexOf(todo);
 			state.todos.splice(toDoToRemove, 1);
 		},
+		EditTodo(state, todo: Todo) {
+			const toDoToDelete = state.todos.filter((x) => x.id === todo.id);
+			const toDoToRemove = state.todos.indexOf(toDoToDelete[0]);
+			state.todos.splice(toDoToRemove, 1, todo);
+			// state.todos.push(todo);
+		},
 	},
 	actions: {
 		addToDo({ commit }, todo: Todo) {
@@ -68,6 +74,9 @@ export default new Vuex.Store<State>({
 		},
 		deleteTodo({ commit }, todo: Todo) {
 			commit('DeleteTodo', todo);
+		},
+		editToDo({ commit }, todo: Todo) {
+			commit('EditTodo', todo);
 		},
 	},
 	modules: {},
