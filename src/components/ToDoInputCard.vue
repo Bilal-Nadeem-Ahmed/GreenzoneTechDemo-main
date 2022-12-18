@@ -67,8 +67,8 @@ export default class ToDoInputCard extends Vue {
 		(v: string) => !!v || 'Title is required',
 		(v: string) => v.length >= 10 || 'Title must be more than 10 characters',
 		//this does not work as well as it should, would use an external library for validation
-		(v: string) =>
-			this.todoTitles.includes(v) === true || 'Title must be unique',
+		// (v: string) =>
+		// 	this.todoTitles.includes(v) === true || 'Title must be unique',
 		(v: string) => v.length <= 100 || 'Title must be less than 100 characters',
 	];
 	descriptionRules = [
