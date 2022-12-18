@@ -16,14 +16,14 @@
 				{{ toggleMessage() }}
 			</v-btn>
 			<v-icon @click="deleteTodo" color="#dc143c">mdi-delete</v-icon>
-			<v-icon color="#1e90ff">mdi-pencil</v-icon>
+			<v-icon @click="editToDo" color="#1e90ff">mdi-pencil</v-icon>
 		</v-card-actions>
 	</v-card>
 </template>
 
 <script lang="ts">
 import store, { Todo } from '@/store';
-import { Vue, Prop, Component } from 'vue-property-decorator';
+import { Vue, Prop, Component, Emit } from 'vue-property-decorator';
 
 @Component({})
 export default class ToDoItemCard extends Vue {
@@ -39,6 +39,10 @@ export default class ToDoItemCard extends Vue {
 			return 'Set As Incomplete';
 		}
 		return 'Set as Complete';
+	}
+	@Emit('editToDo')
+	editToDo(): number {
+		return this.todo.id;
 	}
 }
 </script>
