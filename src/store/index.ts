@@ -54,7 +54,6 @@ export default new Vuex.Store<State>({
 		},
 		//This method deletes todos
 		DeleteTodo(state, todo: Todo) {
-			const id = state.todos.filter((x) => x.id === todo.id);
 			const toDoToRemove = state.todos.indexOf(todo);
 			state.todos.splice(toDoToRemove, 1);
 		},
