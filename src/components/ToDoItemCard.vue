@@ -16,7 +16,9 @@
 				{{ toggleMessage() }}
 			</v-btn>
 			<v-icon @click="deleteTodo" color="#dc143c">mdi-delete</v-icon>
-			<v-icon @click="editToDo" color="#1e90ff">mdi-pencil</v-icon>
+			<a style="text-decoration: none" href="#edit">
+				<v-icon @click="editToDo" color="#1e90ff"> mdi-pencil </v-icon>
+			</a>
 		</v-card-actions>
 	</v-card>
 </template>
