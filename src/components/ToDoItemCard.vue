@@ -36,7 +36,7 @@ export default class ToDoItemCard extends Vue {
 	}
 	toggleMessage(): string {
 		if (this.todo.isCompleted === true) {
-			return 'Set As Incomplete';
+			return 'Set As Active';
 		}
 		return 'Set as Complete';
 	}

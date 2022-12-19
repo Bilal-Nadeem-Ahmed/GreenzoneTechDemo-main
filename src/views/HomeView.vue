@@ -20,7 +20,7 @@
 				></to-do-item-card>
 			</div>
 		</v-container>
-		<h2>InComplete ToDos</h2>
+		<h2>Active ToDos</h2>
 		<v-container class="d-flex justify-space-around flex-wrap">
 			<div v-for="todo in isIncompleted" v-bind:key="todo.id">
 				<to-do-item-card
